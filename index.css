@@ -15,3 +15,7 @@ body {
     top: 50%;
     right: 50%;
 }
+
+button {
+    background: blue;
+}
