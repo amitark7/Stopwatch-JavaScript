@@ -12,13 +12,21 @@
     <div class="container">
         <h1>STOPWATCH</h1>
         <h3>VANILLA JAVASCRIPT STOPWATCH</h3>
-        <div class="display-timer">
-            00:00:00
+        <div id="display-timer">
+            00:00:00:00
         </div>
         <div class="button-container">
-            <button onclick="startTimer()">Start</button>
-            <button onclick="stopTimer()">Stop</button>
-            <button onclick="resetTimer()">Reset</button>
+            <button id="lapButton" onclick="lapTimer()">Lap</button>
+            <button id="playButton" onclick="startTimer()">Start</button>
+            <button id="stopButton" onclick="stopTimer()">Stop</button>
+            <button id="resetButton" onclick="resetTimer()">Reset</button>
+        </div>
+    </div>
+    <div id="laps-timer">
+        <div class="laps-row">
+            <p class="lap-no">Lap</p>
+            <p class="lap-no laptime">Lap Time</p>
+            <p class="total">Total</p>
         </div>
     </div>
     <script src="index.js"></script>

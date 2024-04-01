@@ -7,18 +7,16 @@
 body {
     background-color: blanchedalmond;
     position: relative;
-    height: 100vh;
 }
 
 .container {
-    position: absolute;
-    transform: translate(50%, 0%);
-    top: 50%;
-    right: 50%;
+    width: 40%;
+    margin: auto;
     background: #FFA900;
     color: #fff;
-    padding: 20px;
+    padding: 30px;
     text-align: center;
+    border-radius: 10px;
 }
 
 .container h1 {
@@ -35,7 +33,7 @@ body {
     margin-bottom: 20px;
 }
 
-.container .display-timer {
+.container #display-timer {
     font-size: 40px;
     margin-bottom: 10px;
 }
@@ -55,4 +53,48 @@ body {
     background: transparent;
     color: #fff;
     border: 2px solid #f1cfcf;
+    cursor: pointer;
+}
+
+#lapButton {
+    display: none;
+}
+
+#resetButton {
+    display: none;
+}
+
+#stopButton {
+    display: none;
+}
+
+#laps-timer {
+    width: 40%;
+    margin: 30px auto 0px auto;
+    text-align: left;
+    display: none;
+    background: rgb(103, 67, 136);
+    padding: 30px;
+    border-radius: 7px;
+    color: #fff;
+}
+
+#laps-timer .laps-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 30px 10px 0px;
+}
+
+.laps-row .lap-no {
+    font-size: 23px;
+    letter-spacing: 1.3px;
+}
+
+.laps-row .laptime {
+    margin-left: -120px;
+}
+
+.laps-row .total {
+    font-size: 23px;
+    letter-spacing: 1.3px;
 }
