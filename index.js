@@ -1,5 +1,5 @@
+const displayTimer = document.getElementById("display-timer");
 let isRunning = false;
-let displayTimer = document.getElementById("display-timer");
 let hr = 0;
 let min = 0;
 let sec = 0;
@@ -38,7 +38,7 @@ function lapTimer() {
     document.getElementById("laps-timer").style.display = "block";
 
     //add laps by serially and lap gap and total laps
-    let textNode = `
+    const textNode = `
     <div class="laps-row">
     <p class="lap-no">${lapNO < 9 ? "0" + ++lapNO : ++lapNO}</p>
     <p class="lap-no">+${hr - lapHr < 10 ? "0" + (hr - lapHr) : hr - lapHr}:${
