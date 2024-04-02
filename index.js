@@ -4,16 +4,10 @@ let hr = 0;
 let min = 0;
 let sec = 0;
 let mili = 0;
-let lapNO = 0;
 let timerRef = null;
 let startTime = 0;
 let timeDifference = 0;
-
-//To Store last lap Time
-let lapHr = 0;
-let lapMin = 0;
-let lapSec = 0;
-let lapMili = 0;
+let lapTimes = [];
 
 //start timer after click start button
 function startTimer() {
@@ -28,34 +22,6 @@ function startTimer() {
 
     //add setInterval to update Our timer
     timerRef = setInterval(timer, 10);
-  }
-}
-
-//This function for time laps after click laps BUtton
-function lapTimer() {
-  if (isRunning) {
-    //When laps button created then laps display block
-    document.getElementById("laps-timer").style.display = "block";
-
-    //add laps by serially and lap gap and total laps
-    const textNode = `
-    <div class="laps-row">
-    <p class="lap-no">${lapNO < 9 ? "0" + ++lapNO : ++lapNO}</p>
-    <p class="lap-no">+${hr - lapHr < 10 ? "0" + (hr - lapHr) : hr - lapHr}:${
-      min - lapMin < 10 ? "0" + (min - lapMin) : min - lapMin
-    }:${sec - lapSec < 10 ? "0" + (sec - lapSec) : sec - lapSec}:${
-      mili - lapMili < 10 ? "0" + (mili - lapMili) : mili - lapMili
-    }</p>
-    <p class="total">${hr < 10 ? "0" + hr : hr}:${min < 10 ? "0" + min : min}:${
-      sec < 10 ? "0" + sec : sec
-    }:${mili < 10 ? "0" + mili : mili}</p>
-  </div>`;
-    lapHr = hr;
-    lapMin = min;
-    lapSec = sec;
-    document
-      .getElementById("laps-timer")
-      .insertAdjacentHTML("beforeend", textNode);
   }
 }
 
@@ -78,11 +44,11 @@ function resetTimer() {
   isRunning = false;
   startTime = 0;
   timeDifference = 0;
+  lapTimes = [];
   displayTimer.innerText = "00:00:00:00";
   hr = 0;
   min = 0;
   sec = 0;
-  lapNO = 0;
   document.getElementById("laps-timer").style.display = "none";
   document.getElementById("laps-timer").innerHTML = ` <div class="laps-row">
   <p class="lap-no">Lap</p>
@@ -106,17 +72,50 @@ function timer() {
   //Calculate time diffrence between current time and start time
   timeDifference = current - startTime;
 
-  //Calculate hr, min, sec, mili from timeDiffrence
-  hr = Math.floor(timeDifference / 3600000);
-  min = Math.floor(timeDifference / 60000) % 60;
-  sec = Math.floor(timeDifference / 1000) % 60;
-  mili = Math.floor((timeDifference % 1000) / 10);
-
   //store in display variable to time format
-  const display = `${hr < 10 ? "0" + hr : hr}:${min < 10 ? "0" + min : min}:${
-    sec < 10 ? "0" + sec : sec
-  }:${mili < 10 ? "0" + mili : mili}`;
+  const display = formatTime(timeDifference);
 
   //show Timer on Webpages
   displayTimer.innerText = display;
+}
+
+//This function for time laps after click laps BUtton
+function lapClick() {
+  if (isRunning) {
+    document.getElementById("laps-timer").style.display = "block";
+    let elapsedTime = Date.now() - startTime;
+    let lapTime = formatTime(elapsedTime);
+    let lapIndex = lapTimes.length + 1;
+    let previousLapTime =
+      lapTimes.length > 0 ? lapTimes[lapTimes.length - 1].time : 0;
+    let lapDuration = elapsedTime - previousLapTime;
+
+    lapTimes.push({ time: elapsedTime, duration: lapDuration });
+    const textNode = `
+  <div class="laps-row">
+  <p class="lap-no">${lapIndex}</p>
+  <p class="lap-no">+${formatTime(lapDuration)}</p>
+  <p class="total">${lapTime}</p>
+</div>`;
+    document
+      .getElementById("laps-timer")
+      .insertAdjacentHTML("beforeend", textNode);
+  }
+}
+
+//To manage zero for single zero
+const formatWithLeadingZero = (number) => {
+  if (number < 10) return "0" + number;
+  else return number;
+};
+
+//Convert milliseconds to hour , min ,sec ,milisec
+function formatTime(milliseconds) {
+  let hours = Math.floor(milliseconds / 3600000);
+  let minutes = Math.floor((milliseconds % 3600000) / 60000);
+  let seconds = Math.floor((milliseconds % 60000) / 1000);
+  let millis = Math.floor((milliseconds % 1000) / 10);
+  return `${formatWithLeadingZero(hours)}:${formatWithLeadingZero(
+    minutes
+  )}:${formatWithLeadingZero(seconds)}:${formatWithLeadingZero(millis)}`;
 }
