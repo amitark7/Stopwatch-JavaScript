@@ -1,10 +1,13 @@
-let flag = false;
+let isRunning = false;
 let displayTimer = document.getElementById("display-timer");
 let hr = 0;
 let min = 0;
 let sec = 0;
 let mili = 0;
 let lapNO = 0;
+let timerRef = null;
+let startTime = 0;
+let timeDifference = 0;
 
 //To Store last lap Time
 let lapHr = 0;
@@ -13,22 +16,20 @@ let lapSec = 0;
 let lapMili = 0;
 
 function startTimer() {
-  if (flag) {
-    return;
-  } else {
-    flag = true;
+  if (!isRunning) {
+    startTime = Date.now() - timeDifference;
+    isRunning = true;
     document.getElementById("lapButton").style.display = "block";
     document.getElementById("playButton").style.display = "none";
     document.getElementById("stopButton").style.display = "block";
     document.getElementById("resetButton").style.display = "block";
-    timer();
+    timerRef = setInterval(timer, 10);
   }
 }
 
 function lapTimer() {
-  if (flag) {
+  if (isRunning) {
     document.getElementById("laps-timer").style.display = "block";
-    let node = document.createElement("div");
     let textNode = `
     <div class="laps-row">
     <p class="lap-no">${lapNO < 9 ? "0" + ++lapNO : ++lapNO}</p>
@@ -51,13 +52,20 @@ function lapTimer() {
 }
 
 function stopTimer() {
-  flag = false;
-  document.getElementById("stopButton").style.display = "none";
-  document.getElementById("playButton").style.display = "block";
+  if (isRunning) {
+    timeDifference = Date.now() - startTime;
+    clearInterval(timerRef);
+    isRunning = false;
+    document.getElementById("stopButton").style.display = "none";
+    document.getElementById("playButton").style.display = "block";
+  }
 }
 
 function resetTimer() {
-  flag = false;
+  clearInterval(timerRef);
+  isRunning = false;
+  startTime = 0;
+  timeDifference = 0;
   displayTimer.innerText = "00:00:00:00";
   hr = 0;
   min = 0;
@@ -79,24 +87,16 @@ function resetTimer() {
 }
 
 function timer() {
-  if (flag) {
-    mili++;
-    if (mili === 100) {
-      sec++;
-      mili = 0;
-      if (sec === 60) {
-        min++;
-        sec = 0;
-        if (min === 60) {
-          hr++;
-          min = 0;
-        }
-      }
-    }
-    const time = `${hr < 10 ? "0" + hr : hr}:${min < 10 ? "0" + min : min}:${
-      sec < 10 ? "0" + sec : sec
-    }:${mili < 10 ? "0" + mili : mili}`;
-    displayTimer.innerText = time;
-    setTimeout(timer, 10);
-  }
+  const current = Date.now();
+  timeDifference = current - startTime;
+
+  hr = Math.floor(timeDifference / 3600000);
+  min = Math.floor(timeDifference / 60000) % 60;
+  sec = Math.floor(timeDifference / 1000) % 60;
+  mili = Math.floor((timeDifference % 1000) / 10);
+
+  const time = `${hr < 10 ? "0" + hr : hr}:${min < 10 ? "0" + min : min}:${
+    sec < 10 ? "0" + sec : sec
+  }:${mili < 10 ? "0" + mili : mili}`;
+  displayTimer.innerText = time;
 }
