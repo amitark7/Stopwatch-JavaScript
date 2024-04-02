@@ -106,3 +106,134 @@ body {
     font-size: 23px;
     letter-spacing: 1.3px;
 }
+
+@media only screen and (min-width:320px) {
+    .container {
+        width: 75%;
+    }
+
+    .container .button-container {
+        gap: 10px;
+    }
+
+    .container h1 {
+        font-size: 10vw;
+    }
+
+    .container h3 {
+        font-size: 5.8vw;
+    }
+
+    .container #display-timer {
+        font-size: 9vw;
+    }
+
+    .button-container button {
+        font-size: 3vw;
+        padding: 8px 30px;
+    }
+
+    #laps-timer {
+        width: 75%;
+    }
+
+    .laps-row .lap-no {
+        font-size: 3vw;
+    }
+
+    .laps-row .laptime {
+        margin-left: -18vw;
+    }
+
+    .laps-row .total {
+        font-size: 3vw;
+    }
+}
+
+@media only screen and (min-width:768px) {
+    .container {
+        width: 75%;
+    }
+
+    .container h1 {
+        font-size: 6vw;
+    }
+
+    .container h3 {
+        font-size: 4vw;
+    }
+
+    .container #display-timer {
+        font-size: 6vw;
+    }
+
+    .container .button-container {
+        gap: 20px;
+    }
+
+    .button-container button {
+        font-size: 2vw;
+        padding: 10px 40px;
+    }
+}
+
+@media only screen and (min-width:1024px) {
+    .container .button-container {
+        gap: 30px;
+    }
+
+    .button-container button {
+        padding: 10px 60px;
+    }
+}
+
+
+@media only screen and (min-width:1440px) {
+    .container {
+        width: 50%;
+    }
+
+    .container h1 {
+        font-size: 4vw;
+    }
+
+    .container h3 {
+        font-size: 2.5vw;
+    }
+
+    .container #display-timer {
+        font-size: 3.9vw;
+    }
+
+    .button-container button {
+        font-size: 1.2vw;
+        padding: 12px 60px;
+    }
+
+    #laps-timer {
+        width: 50%;
+    }
+
+    .laps-row .lap-no {
+        font-size: 1.8vw;
+    }
+
+    .laps-row .laptime {
+        margin-left: -11vw;
+    }
+
+    .laps-row .total {
+        font-size: 1.8vw;
+
+    }
+}
+
+@media screen and (min-width:2000px) {
+    .container .button-container {
+        gap: 80px;
+    }
+
+    .button-container button {
+        padding: 16px 88px;
+    }
+}
